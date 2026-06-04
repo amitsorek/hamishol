@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>המשעול השלישי — מרחב מונחה בטבע</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --forest:      #2D5016;
+      --forest-dark: #1a2f0a;
+      --forest-mid:  #3d6b1e;
+      --olive:       #6B7C3D;
+      --olive-light: #8a9d55;
+      --beige:       #F5EDD6;
+      --brown:       #8B5E3C;
+      --brown-dark:  #6b4830;
+      --cream:       #FAF7F0;
+      --text-dark:   #1a2410;
+      --text-mid:    #3d4a2a;
+      --text-light:  #5c6b48;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      direction: rtl;
+    }
+
+    /* ─── NAV ──────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.4s, box-shadow 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(26, 47, 10, 0.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--beige);
+      letter-spacing: 0.03em;
+    }
+
+    .nav-cta {
+      background: transparent;
+      border: 1.5px solid rgba(245,237,214,0.5);
+      color: var(--beige);
+      padding: 0.5rem 1.25rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s;
+      font-family: 'Heebo', sans-serif;
+      cursor: pointer;
+    }
+
+    .nav-cta:hover {
+      background: var(--beige);
+      color: var(--forest);
+      border-color: var(--beige);
+    }
+
+    /* ─── HERO ─────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 65% 40%, rgba(160,120,50,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 75%, rgba(10,32,5,0.7) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 85%, rgba(45,80,22,0.4) 0%, transparent 45%),
+        linear-gradient(158deg,
+          #060e03 0%,
+          #0f1f07 15%,
+          #1e3b0e 30%,
+          #2D5016 50%,
+          #4a6b25 67%,
+          #6B7C3D 80%,
+          #7a6535 90%,
+          #8B5E3C 100%
+        );
+    }
+
+    /* grain overlay */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.055;
+    }
+
+    /* SVG tree silhouettes */
+    .hero-trees {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      pointer-events: none;
+    }
+
+    /* light rays */
+    .hero-rays {
+      position: absolute;
+      inset: 0;
+      background:
+        conic-gradient(from 200deg at 30% 0%,
+          transparent 0deg,
+          rgba(200,160,60,0.04) 15deg,
+          transparent 30deg,
+          rgba(200,160,60,0.04) 45deg,
+          transparent 60deg
+        );
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      max-width: 920px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: rgba(245,237,214,0.55);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .hero-eyebrow span {
+      display: inline-block;
+      width: 30px;
+      height: 1px;
+      background: rgba(245,237,214,0.3);
+    }
+
+    .hero-title {
+      font-size: clamp(4rem, 12vw, 9.5rem);
+      font-weight: 900;
+      color: var(--beige);
+      line-height: 0.9;
+      margin-bottom: 1.75rem;
+      letter-spacing: -0.03em;
+      text-shadow: 0 4px 40px rgba(0,0,0,0.4);
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: rgba(245,237,214,0.55);
+      font-weight: 300;
+      font-size: 0.65em;
+      display: block;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.15em;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      font-weight: 400;
+      color: rgba(245,237,214,0.8);
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+
+    .hero-tagline {
+      font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+      font-weight: 300;
+      color: rgba(245,237,214,0.55);
+      margin-bottom: 3rem;
+      font-style: italic;
+      max-width: 560px;
+      margin-inline: auto;
+      line-height: 1.75;
+    }
+
+    .hero-tagline::before { content: '❝ '; }
+    .hero-tagline::after  { content: ' ❞'; }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--beige);
+      color: var(--forest-dark);
+      padding: 1rem 2.75rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      letter-spacing: 0.02em;
+      font-family: 'Heebo', sans-serif;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--beige);
+      border-color: rgba(245,237,214,0.7);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(245,237,214,0.3);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 2;
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    .scroll-hint svg {
+      width: 20px;
+      opacity: 0.5;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(7px); }
+    }
+
+    /* ─── WAVE DIVIDERS ────────────────────────────────── */
+    .wave { display: block; width: 100%; overflow: hidden; line-height: 0; }
+    .wave svg { display: block; width: 100%; }
+
+    /* ─── SHARED SECTION STYLES ────────────────────────── */
+    section { padding: 6rem 1.5rem; }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 0.85rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1.5px;
+      background: var(--olive);
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--forest);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ─── INTRO ────────────────────────────────────────── */
+    .intro {
+      background: var(--cream);
+      padding-top: 5rem;
+      padding-bottom: 2rem;
+    }
+
+    .intro-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) {
+      .intro-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .intro-text {
+      font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+      font-weight: 400;
+      line-height: 1.85;
+      color: var(--text-mid);
+    }
+
+    .intro-text strong {
+      color: var(--forest);
+      font-weight: 700;
+    }
+
+    .intro-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--beige);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      border: 1px solid rgba(107,124,61,0.15);
+    }
+
+    .intro-stat-num {
+      font-size: 4.5rem;
+      font-weight: 900;
+      color: var(--forest);
+      line-height: 1;
+    }
+
+    .intro-stat-label {
+      font-size: 1rem;
+      color: var(--text-light);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ─── PILLARS ──────────────────────────────────────── */
+    .pillars { background: var(--beige); }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 700px) {
+      .pillars-grid { grid-template-columns: 1fr; }
+    }
+
+    .pillar-card {
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(107,124,61,0.12);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 60px; height: 60px;
+      border-radius: 0 20px 0 100%;
+      background: linear-gradient(135deg, rgba(107,124,61,0.08), transparent);
+    }
+
+    .pillar-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(45,80,22,0.14);
+    }
+
+    .pillar-icon {
+      font-size: 2.75rem;
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .pillar-name {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--forest);
+      margin-bottom: 0.75rem;
+    }
+
+    .pillar-desc {
+      font-size: 0.97rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+    }
+
+    /* ─── ACTIVITIES ───────────────────────────────────── */
+    .activities {
+      background: var(--forest);
+      position: relative;
+    }
+
+    .activities .section-label {
+      color: rgba(245,237,214,0.5);
+    }
+
+    .activities .section-label::before {
+      background: rgba(245,237,214,0.35);
+    }
+
+    .activities .section-title { color: var(--beige); }
+
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 600px) {
+      .activities-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .activity-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(245,237,214,0.1);
+      border-radius: 14px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: background 0.3s, transform 0.3s;
+      cursor: default;
+    }
+
+    .activity-card:hover {
+      background: rgba(245,237,214,0.09);
+      transform: translateY(-3px);
+    }
+
+    .activity-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .activity-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(245,237,214,0.85);
+      line-height: 1.45;
+    }
+
+    .activities-note {
+      color: rgba(245,237,214,0.4);
+      font-size: 0.88rem;
+      margin-top: 2.5rem;
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* ─── QUOTE ────────────────────────────────────────── */
+    .quote-section {
+      background: linear-gradient(148deg, #5a3825 0%, var(--brown) 40%, #9e7048 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7rem 2rem;
+    }
+
+    .quote-section::before {
+      content: '❝';
+      position: absolute;
+      top: -2rem;
+      right: 3%;
+      font-size: 20rem;
+      color: rgba(255,255,255,0.04);
+      font-family: Georgia, serif;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .quote-inner { position: relative; z-index: 1; }
+
+    .quote-text {
+      font-size: clamp(1.1rem, 3vw, 1.75rem);
+      font-weight: 300;
+      color: rgba(245,237,214,0.92);
+      line-height: 1.9;
+      max-width: 780px;
+      margin: 0 auto 2rem;
+    }
+
+    .quote-text strong {
+      font-weight: 800;
+      color: var(--beige);
+    }
+
+    .quote-attr {
+      font-size: 0.8rem;
+      color: rgba(245,237,214,0.4);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ─── METHOD ───────────────────────────────────────── */
+    .method {
+      background: var(--cream);
+    }
+
+    .method-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) {
+      .method-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
+    .method-badge {
+      background: linear-gradient(135deg, var(--olive), var(--forest));
+      color: var(--beige);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+
+    .method-badge-title {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    .method-badge-sub {
+      font-size: 0.85rem;
+      font-weight: 400;
+      opacity: 0.7;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+    }
+
+    .method-badge-def {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
+    .method-text {
+      font-size: 1rem;
+      color: var(--text-mid);
+      line-height: 1.85;
+    }
+
+    .method-text p + p { margin-top: 1rem; }
+
+    /* ─── ABOUT ────────────────────────────────────────── */
+    .about { background: var(--beige); }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .about-inner { grid-template-columns: 1fr; text-align: center; }
+      .about-photo { margin: 0 auto; }
+    }
+
+    .about-photo {
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--forest), var(--olive-light), var(--brown));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4.5rem;
+      flex-shrink: 0;
+      box-shadow: 0 12px 40px rgba(45,80,22,0.28);
+      border: 4px solid var(--cream);
+    }
+
+    .about-name {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--forest);
+      margin-bottom: 0.3rem;
+    }
+
+    .about-role {
+      font-size: 0.85rem;
+      color: var(--olive);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+    }
+
+    .about-bio {
+      font-size: 0.97rem;
+      color: var(--text-mid);
+      line-height: 1.85;
+      max-width: 580px;
+    }
+
+    .about-bio p + p { margin-top: 0.75rem; }
+
+    /* ─── CONTACT ──────────────────────────────────────── */
+    .contact {
+      background: linear-gradient(155deg, var(--forest) 0%, var(--forest-dark) 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(107,124,61,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(139,94,60,0.15) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .contact-inner { position: relative; z-index: 1; }
+
+    .contact .section-label { color: rgba(245,237,214,0.45); }
+    .contact .section-label::before { background: rgba(245,237,214,0.3); }
+
+    .contact .section-title { color: var(--beige); }
+
+    .contact-sub {
+      font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+      color: rgba(245,237,214,0.6);
+      margin-bottom: 3rem;
+      line-height: 1.7;
+      max-width: 520px;
+      margin-inline: auto;
+      margin-bottom: 3rem;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1.25rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: rgba(245,237,214,0.08);
+      border: 1.5px solid rgba(245,237,214,0.2);
+      color: var(--beige);
+      padding: 0.9rem 1.85rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.97rem;
+      font-weight: 500;
+      transition: all 0.3s;
+      direction: ltr;
+    }
+
+    .contact-link:hover {
+      background: var(--beige);
+      color: var(--forest);
+      border-color: var(--beige);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .contact-details {
+      font-size: 0.8rem;
+      color: rgba(245,237,214,0.28);
+      letter-spacing: 0.08em;
+      line-height: 2;
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────── */
+    footer {
+      background: #060d03;
+      color: rgba(245,237,214,0.2);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── SCROLL REVEAL ────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.75s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+    .reveal-d5 { transition-delay: 0.5s; }
+    .reveal-d6 { transition-delay: 0.6s; }
+
+    /* hero items animate in on load */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp 0.8s 0.2s both ease-out; }
+    .hero-title   { animation: fadeUp 0.9s 0.4s both ease-out; }
+    .hero-subtitle{ animation: fadeUp 0.8s 0.65s both ease-out; }
+    .hero-tagline { animation: fadeUp 0.8s 0.85s both ease-out; }
+    .btn-primary  { animation: fadeUp 0.8s 1.0s both ease-out; }
+    .scroll-hint  { animation: fadeUp 0.8s 1.3s both ease-out; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ══════════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-logo">המשעול השלישי</div>
+  <a href="#contact" class="nav-cta">בואו נדבר</a>
+</nav>
+
+<!-- ═══ HERO ══════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-rays"></div>
+
+  <!-- Tree silhouettes (CSS/SVG) -->
+  <div class="hero-trees">
+    <svg width="100%" height="320" viewBox="0 0 1440 320" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0.07;">
+      <!-- left tree -->
+      <line x1="80"  y1="320" x2="80"  y2="120" stroke="#F5EDD6" stroke-width="4" stroke-linecap="round"/>
+      <line x1="80"  y1="200" x2="30"  y2="130" stroke="#F5EDD6" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="80"  y1="180" x2="140" y2="115" stroke="#F5EDD6" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="80"  y1="155" x2="25"  y2="90"  stroke="#F5EDD6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="80"  y1="140" x2="145" y2="80"  stroke="#F5EDD6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="80"  y1="125" x2="55"  y2="55"  stroke="#F5EDD6" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- far left -->
+      <line x1="200" y1="320" x2="200" y2="155" stroke="#F5EDD6" stroke-width="3" stroke-linecap="round"/>
+      <line x1="200" y1="230" x2="160" y2="175" stroke="#F5EDD6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="200" y1="215" x2="248" y2="165" stroke="#F5EDD6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="200" y1="195" x2="152" y2="145" stroke="#F5EDD6" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- right tree -->
+      <line x1="1360" y1="320" x2="1360" y2="100" stroke="#F5EDD6" stroke-width="4" stroke-linecap="round"/>
+      <line x1="1360" y1="195" x2="1300" y2="125" stroke="#F5EDD6" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1360" y1="175" x2="1415" y2="110" stroke="#F5EDD6" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1360" y1="150" x2="1295" y2="85"  stroke="#F5EDD6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="1360" y1="130" x2="1418" y2="70"  stroke="#F5EDD6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="1360" y1="110" x2="1335" y2="48"  stroke="#F5EDD6" stroke-width="1.5" stroke-linecap="round"/>
+      <!-- far right -->
+      <line x1="1240" y1="320" x2="1240" y2="160" stroke="#F5EDD6" stroke-width="3" stroke-linecap="round"/>
+      <line x1="1240" y1="240" x2="1195" y2="185" stroke="#F5EDD6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="1240" y1="225" x2="1285" y2="175" stroke="#F5EDD6" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">
+      <span></span>
+      אויקו-תרפיה · מועצה אזורית זבולון
+      <span></span>
+    </p>
+    <h1 class="hero-title">
+      <em>המשעול</em>
+      השלישי
+    </h1>
+    <p class="hero-subtitle">
+      מרחב מונחה בטבע לבני ובנות 60+<br>
+      לבניית שייכות, משמעות, כיוון וחיוניות
+    </p>
+    <p class="hero-tagline">
+      יש אנשים שלא מחפשים רק להעביר זמן — הם מחפשים דרך
+    </p>
+    <a href="#pillars" class="btn-primary">רוצה לדעת עוד</a>
+  </div>
+
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+    גלול
+  </div>
+</section>
+
+<!-- WAVE → cream -->
+<div class="wave" style="background:linear-gradient(to bottom, #1a2f0a, #2D5016 40%);">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#FAF7F0" d="M0,45 C240,90 600,10 900,55 C1140,90 1300,20 1440,45 L1440,90 L0,90 Z"/>
+  </svg>
+</div>
+
+<!-- ═══ INTRO ═══════════════════════════════════════════ -->
+<section class="intro">
+  <div class="container">
+    <div class="intro-inner">
+      <div class="reveal">
+        <span class="section-label">מי זה בשבילך?</span>
+        <h2 class="section-title">יש שלב שבו<br>מתפנה מקום</h2>
+        <p class="intro-text">
+          הילדים גדלו. העבודה כבר לא מגדירה אותנו. היומיום מבקש
+          <strong>משהו שהוא מעבר לעוד חוג, הרצאה או טיול.</strong>
+          <br><br>
+          המשעול השלישי מציע מסגרת קבועה, קבוצה קטנה ואנושית,
+          ותהליך שנתי שמאפשר לפגוש את עצמך מחדש — בקצב שלך,
+          בטבע, בשלב הזה ממש.
+        </p>
+      </div>
+      <div class="intro-stat reveal reveal-d2">
+        <div class="intro-stat-num">60+</div>
+        <div class="intro-stat-label">גיל שהוא לא סוף<br>אלא תחילה של דרך אחרת</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE → beige -->
+<div class="wave" style="background:#FAF7F0;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#F5EDD6" d="M0,25 C360,70 900,5 1440,45 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- ═══ PILLARS ══════════════════════════════════════════ -->
+<section class="pillars" id="pillars">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">מה התוכנית נותנת</span>
+      <h2 class="section-title">שלושה יסודות</h2>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card reveal reveal-d1">
+        <span class="pillar-icon">🌿</span>
+        <h3 class="pillar-name">חיוניות</h3>
+        <p class="pillar-desc">
+          תנועה עדינה, נשימה, חיבור לגוף ולחושים. הטבע מזמין
+          אותנו לחזור לקצב הטבעי שלנו — ומשם מגיעה האנרגיה.
+        </p>
+      </div>
+      <div class="pillar-card reveal reveal-d2">
+        <span class="pillar-icon">🤝</span>
+        <h3 class="pillar-name">שייכות</h3>
+        <p class="pillar-desc">
+          קבוצה קבועה, פגישות אמיתיות, קהילה שגדלה יחד לאורך השנה.
+          ביטחון וקשר שנבנים לאט — ולכן מחזיקים.
+        </p>
+      </div>
+      <div class="pillar-card reveal reveal-d3">
+        <span class="pillar-icon">🧭</span>
+        <h3 class="pillar-name">משמעות</h3>
+        <p class="pillar-desc">
+          כיוון, זהות, ובהירות לגבי מה עוד חי ובוער בנו.
+          ללכת בדרך שלי, אל מה שאני רוצה — לא מה שמצפים ממני.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE → forest -->
+<div class="wave" style="background:#F5EDD6;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#2D5016" d="M0,55 C300,10 900,80 1440,30 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- ═══ ACTIVITIES ═══════════════════════════════════════ -->
+<section class="activities">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">מה קורה בפועל</span>
+      <h2 class="section-title">מה קורה במפגש?</h2>
+    </div>
+    <div class="activities-grid">
+      <div class="activity-card reveal reveal-d1">
+        <span class="activity-emoji">🥾</span>
+        <p class="activity-name">הליכה קצרה בשטח</p>
+      </div>
+      <div class="activity-card reveal reveal-d2">
+        <span class="activity-emoji">🔥</span>
+        <p class="activity-name">הדלקת מדורה</p>
+      </div>
+      <div class="activity-card reveal reveal-d3">
+        <span class="activity-emoji">🍵</span>
+        <p class="activity-name">הכנת תה וקפה יחד</p>
+      </div>
+      <div class="activity-card reveal reveal-d4">
+        <span class="activity-emoji">💬</span>
+        <p class="activity-name">שיח עומק במעגל</p>
+      </div>
+      <div class="activity-card reveal reveal-d5">
+        <span class="activity-emoji">🌱</span>
+        <p class="activity-name">ליקוט מודרך</p>
+      </div>
+      <div class="activity-card reveal reveal-d6">
+        <span class="activity-emoji">🤲</span>
+        <p class="activity-name">עשייה בידיים</p>
+      </div>
+    </div>
+    <p class="activities-note reveal">
+      לכל מפגש מבנה קבוע — שיוצר ביטחון, רצף והעמקה לאורך השנה.
+    </p>
+  </div>
+</section>
+
+<!-- WAVE → brown -->
+<div class="wave" style="background:#2D5016;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#6b4830" d="M0,35 C480,75 960,15 1440,50 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- ═══ QUOTE ═════════════════════════════════════════════ -->
+<section class="quote-section">
+  <div class="container">
+    <div class="quote-inner">
+      <blockquote class="quote-text reveal">
+        יש שלבים בחיים שבהם הדרך ברורה.<br>
+        יש יעד, יש תפקיד, יש למי להיות.<br><br>
+        ואז מגיע שלב אחר — שקט יותר, פתוח יותר.<br>
+        אבל גם כזה שמעלה שאלות.<br>
+        מי אני עכשיו? מה עוד מחכה לי?<br><br>
+        <strong>כאן מתחיל המשעול השלישי.</strong>
+      </blockquote>
+      <p class="quote-attr reveal">— מתוך סיפור המותג, המשעול השלישי</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE → cream -->
+<div class="wave" style="background:linear-gradient(to bottom, #6b4830, #8B5E3C);">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#FAF7F0" d="M0,50 C360,10 1080,75 1440,30 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- ═══ METHOD ════════════════════════════════════════════ -->
+<section class="method">
+  <div class="container">
+    <div class="method-inner">
+      <div class="method-badge reveal">
+        <div class="method-badge-title">אויקו-תרפיה</div>
+        <div class="method-badge-sub">Oiko-therapy</div>
+        <div class="method-badge-def">
+          מהמילה היוונית <em>Oikos</em> — בית במובנו הרחב.<br><br>
+          שיטה לבניית בית פנימי מחדש: רגשי, חברתי, קיומי —
+          ממנו ניתן לצאת בביטחון אל קשר, יוזמה ומשמעות מחודשת.
+        </div>
+      </div>
+      <div class="reveal reveal-d2">
+        <span class="section-label">השיטה</span>
+        <h2 class="section-title">תהליך, לא תוכנית</h2>
+        <div class="method-text">
+          <p>
+            המשעול השלישי אינה אוסף של חוויות חד-פעמיות. זהו תהליך שנתי מובנה,
+            שמאפשר שינוי מצטבר ואמיתי — לא רק חוויה נקודתית.
+          </p>
+          <p>
+            באופן הדרגתי המשתתפים מפתחים ביטחון ואמון, האטה ונוכחות,
+            בירור זהות ותפקידים, חיבור למקורות חיות ומשמעות,
+            וחיזוק קשרים ויוזמה קהילתית.
+          </p>
+          <p>
+            הטבע אינו תפאורה בלבד — הוא מרחב העבודה. הוא מאפשר האטה,
+            תנועה מותאמת, ויסות רגשי, וחוויה חושית שפותחת שיח אמיתי.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE → beige -->
+<div class="wave" style="background:#FAF7F0;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#F5EDD6" d="M0,20 C600,80 900,10 1440,55 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- ═══ ABOUT ══════════════════════════════════════════════ -->
+<section class="about">
+  <div class="container">
+    <div class="about-inner reveal">
+      <div class="about-photo">🌲</div>
+      <div>
+        <span class="section-label">המנחה</span>
+        <h2 class="about-name">עמית שורק</h2>
+        <p class="about-role">
+          מדריך שטח ותיק · מנחה קבוצות בטבע<br>
+          מייסד המשעול השלישי · מפתח שיטת האויקו-תרפיה
+        </p>
+        <div class="about-bio">
+          <p>
+            מדריך שטח עם ניסיון רב בהובלת קבוצות, הכשרת מדריכים
+            ובניית תהליכים חינוכיים וחברתיים בשטח.
+          </p>
+          <p>
+            בעל תואר שני במדעי הקרקע, המים ואיכות הסביבה.
+            בוגר תוכנית מנדל למנהיגות נוער.
+          </p>
+          <p>
+            מאמין שהטבע הוא מרחב ריפוי, למידה וצמיחה —
+            ושיש בו מקום לכל אחד, בכל שלב בחיים.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE → dark forest -->
+<div class="wave" style="background:#F5EDD6;">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill="#2D5016" d="M0,35 C480,80 900,5 1440,55 L1440,80 L0,80 Z"/>
+  </svg>
+</div>
+
+<!-- ═══ CONTACT ════════════════════════════════════════════ -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="reveal">
+        <span class="section-label">בואו נדבר</span>
+        <h2 class="section-title">המקומות מוגבלים —<br>בואו נדבר</h2>
+        <p class="contact-sub">
+          סדרת מפגשים שנתית, קבוצה קטנה ואינטימית של 12–20 משתתפים.<br>
+          אם הטבע עושה לך טוב ואתה מחפש מסגרת עם עומק — בוא נדבר.
+        </p>
+      </div>
+      <div class="contact-links reveal reveal-d2">
+        <a href="mailto:3hamishol@gmail.com" class="contact-link">
+          ✉&nbsp;&nbsp;3hamishol@gmail.com
+        </a>
+        <a href="tel:+972546535390" class="contact-link">
+          📞&nbsp;&nbsp;054-6535390
+        </a>
+      </div>
+      <p class="contact-details reveal reveal-d3">
+        מועצה אזורית זבולון&nbsp;·&nbsp;מפגשים שבועיים בטבע&nbsp;·&nbsp;שנתי · 10 חודשים
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 המשעול השלישי — עמית שורק | אויקו-תרפיה בטבע</p>
+</footer>
+
+<script>
+  // ── Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // ── Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
