@@ -38,17 +38,20 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 1.25rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
       transition: background 0.4s, box-shadow 0.4s;
     }
 
     nav.scrolled {
-      background: rgba(26, 47, 10, 0.95);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+      background: rgba(26, 47, 10, 0.96);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.25);
+    }
+
+    .nav-top {
+      padding: 1.1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .nav-logo {
@@ -56,13 +59,34 @@
       font-weight: 800;
       color: var(--beige);
       letter-spacing: 0.03em;
+      text-decoration: none;
+    }
+
+    .nav-links-wrap {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: rgba(245,237,214,0.78);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--beige);
     }
 
     .nav-cta {
       background: transparent;
       border: 1.5px solid rgba(245,237,214,0.5);
       color: var(--beige);
-      padding: 0.5rem 1.25rem;
+      padding: 0.45rem 1.2rem;
       border-radius: 50px;
       font-size: 0.85rem;
       font-weight: 600;
@@ -70,12 +94,46 @@
       transition: all 0.25s;
       font-family: 'Heebo', sans-serif;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .nav-cta:hover {
       background: var(--beige);
       color: var(--forest);
       border-color: var(--beige);
+    }
+
+    /* Breadcrumb */
+    .nav-breadcrumb {
+      padding: 0.2rem 2rem 0.45rem;
+      font-size: 0.72rem;
+      color: rgba(245,237,214,0.42);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-top: 1px solid rgba(245,237,214,0.06);
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.35s, max-height 0.35s;
+    }
+
+    nav.scrolled .nav-breadcrumb {
+      opacity: 1;
+      max-height: 30px;
+    }
+
+    .bc-home {
+      color: rgba(245,237,214,0.42);
+      text-decoration: none;
+    }
+    .bc-home:hover { color: rgba(245,237,214,0.7); }
+    .bc-sep { opacity: 0.5; }
+
+    @media (max-width: 600px) {
+      .nav-link { display: none; }
+      .nav-top { padding: 1rem 1.25rem; }
+      .nav-breadcrumb { padding: 0.2rem 1.25rem 0.4rem; }
     }
 
     /* ─── HERO ─────────────────────────────────────────── */
@@ -269,11 +327,10 @@
     .section-label {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0;
       color: var(--olive);
       margin-bottom: 0.85rem;
     }
@@ -281,9 +338,10 @@
     .section-label::before {
       content: '';
       display: inline-block;
-      width: 20px;
-      height: 1.5px;
+      width: 32px;
+      height: 2.5px;
       background: var(--olive);
+      flex-shrink: 0;
     }
 
     .section-title {
@@ -305,7 +363,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
-      align-items: center;
+      align-items: flex-start;
     }
 
     @media (max-width: 700px) {
@@ -473,34 +531,36 @@
     /* ─── QUOTE ────────────────────────────────────────── */
     .quote-section {
       background: linear-gradient(148deg, #5a3825 0%, var(--brown) 40%, #9e7048 100%);
-      text-align: center;
       position: relative;
       overflow: hidden;
-      padding: 7rem 2rem;
+      padding: 0;
     }
 
-    .quote-section::before {
-      content: '❝';
-      position: absolute;
-      top: -2rem;
-      right: 3%;
-      font-size: 20rem;
-      color: rgba(255,255,255,0.04);
-      font-family: Georgia, serif;
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
+    .quote-section > div[style] {
+      min-height: 420px;
     }
 
-    .quote-inner { position: relative; z-index: 1; }
+    @media (max-width: 700px) {
+      .quote-section > div[style] {
+        grid-template-columns: 1fr !important;
+      }
+      .quote-section > div[style] > img {
+        display: none !important;
+      }
+    }
+
+    .quote-inner {
+      position: relative;
+      z-index: 1;
+      text-align: right;
+    }
 
     .quote-text {
-      font-size: clamp(1.1rem, 3vw, 1.75rem);
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
       font-weight: 300;
       color: rgba(245,237,214,0.92);
-      line-height: 1.9;
-      max-width: 780px;
-      margin: 0 auto 2rem;
+      line-height: 2;
+      margin: 0 0 2rem;
     }
 
     .quote-text strong {
@@ -511,8 +571,7 @@
     .quote-attr {
       font-size: 0.8rem;
       color: rgba(245,237,214,0.4);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     /* ─── METHOD ───────────────────────────────────────── */
@@ -743,12 +802,25 @@
 
 <!-- ═══ NAV ══════════════════════════════════════════════ -->
 <nav id="nav">
-  <div class="nav-logo">המשעול השלישי</div>
-  <a href="#contact" class="nav-cta">בואו נדבר</a>
+  <div class="nav-top">
+    <div class="nav-logo">המשעול השלישי</div>
+    <div class="nav-links-wrap">
+      <a href="#intro" class="nav-link">מה זה</a>
+      <a href="#pillars" class="nav-link">יסודות</a>
+      <a href="#activities" class="nav-link">מה קורה</a>
+      <a href="#about" class="nav-link">המנחה</a>
+      <a href="#contact" class="nav-cta">צור קשר</a>
+    </div>
+  </div>
+  <div class="nav-breadcrumb" id="breadcrumb">
+    <a href="#hero" class="bc-home">ראשי</a>
+    <span class="bc-sep">›</span>
+    <span id="bc-current"></span>
+  </div>
 </nav>
 
 <!-- ═══ HERO ══════════════════════════════════════════════ -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-rays"></div>
 
   <!-- Tree silhouettes (CSS/SVG) -->
@@ -783,7 +855,7 @@
   <div class="hero-content">
     <p class="hero-eyebrow">
       <span></span>
-      אויקו-תרפיה · מועצה אזורית זבולון
+      אויקו-תרפיה
       <span></span>
     </p>
     <h1 class="hero-title">
@@ -816,11 +888,11 @@
 </div>
 
 <!-- ═══ INTRO ═══════════════════════════════════════════ -->
-<section class="intro">
+<section class="intro" id="intro">
   <div class="container">
     <div class="intro-inner">
       <div class="reveal">
-        <span class="section-label">מי זה בשבילך?</span>
+        <span class="section-label">מה זה בשבילך?</span>
         <h2 class="section-title">יש שלב שבו<br>מתפנה מקום</h2>
         <p class="intro-text">
           הילדים גדלו. העבודה כבר לא מגדירה אותנו. היומיום מבקש
@@ -831,9 +903,12 @@
           בטבע, בשלב הזה ממש.
         </p>
       </div>
-      <div class="intro-stat reveal reveal-d2">
-        <div class="intro-stat-num">60+</div>
-        <div class="intro-stat-label">גיל שהוא לא סוף<br>אלא תחילה של דרך אחרת</div>
+      <div style="display: flex; flex-direction: column; gap: 1.5rem; align-items: center;">
+        <img src="Images/לבד%20-%20אופקית.png" alt="אנשים בוגרים בטבע" style="width: 100%; max-width: 400px; border-radius: 16px; box-shadow: 0 12px 40px rgba(45,80,22,0.2); object-fit: cover;">
+        <div class="intro-stat reveal reveal-d2">
+          <div class="intro-stat-num">60+</div>
+          <div class="intro-stat-label">גיל שהוא לא סוף<br>אלא תחילה של דרך אחרת</div>
+        </div>
       </div>
     </div>
   </div>
@@ -853,6 +928,7 @@
       <span class="section-label">מה התוכנית נותנת</span>
       <h2 class="section-title">שלושה יסודות</h2>
     </div>
+    <img src="Images/מעגל%20-%20אופקית.png" alt="קבוצה בטבע" style="width: 100%; max-width: 700px; margin: 2rem auto; display: block; border-radius: 16px; box-shadow: 0 12px 40px rgba(45,80,22,0.2); object-fit: cover;">
     <div class="pillars-grid">
       <div class="pillar-card reveal reveal-d1">
         <span class="pillar-icon">🌿</span>
@@ -890,36 +966,39 @@
 </div>
 
 <!-- ═══ ACTIVITIES ═══════════════════════════════════════ -->
-<section class="activities">
+<section class="activities" id="activities">
   <div class="container">
     <div class="reveal">
       <span class="section-label">מה קורה בפועל</span>
       <h2 class="section-title">מה קורה במפגש?</h2>
     </div>
-    <div class="activities-grid">
-      <div class="activity-card reveal reveal-d1">
-        <span class="activity-emoji">🥾</span>
-        <p class="activity-name">הליכה קצרה בשטח</p>
-      </div>
-      <div class="activity-card reveal reveal-d2">
-        <span class="activity-emoji">🔥</span>
-        <p class="activity-name">הדלקת מדורה</p>
-      </div>
-      <div class="activity-card reveal reveal-d3">
-        <span class="activity-emoji">🍵</span>
-        <p class="activity-name">הכנת תה וקפה יחד</p>
-      </div>
-      <div class="activity-card reveal reveal-d4">
-        <span class="activity-emoji">💬</span>
-        <p class="activity-name">שיח עומק במעגל</p>
-      </div>
-      <div class="activity-card reveal reveal-d5">
-        <span class="activity-emoji">🌱</span>
-        <p class="activity-name">ליקוט מודרך</p>
-      </div>
-      <div class="activity-card reveal reveal-d6">
-        <span class="activity-emoji">🤲</span>
-        <p class="activity-name">עשייה בידיים</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 3rem;">
+      <img src="Images/מדורה.png" alt="מדורה בטבע" style="border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.35); width: 100%; object-fit: cover;">
+      <div class="activities-grid">
+        <div class="activity-card reveal reveal-d1">
+          <span class="activity-emoji">🥾</span>
+          <p class="activity-name">הליכה קצרה בשטח</p>
+        </div>
+        <div class="activity-card reveal reveal-d2">
+          <span class="activity-emoji">🔥</span>
+          <p class="activity-name">הדלקת מדורה</p>
+        </div>
+        <div class="activity-card reveal reveal-d3">
+          <span class="activity-emoji">🍵</span>
+          <p class="activity-name">הכנת תה וקפה יחד</p>
+        </div>
+        <div class="activity-card reveal reveal-d4">
+          <span class="activity-emoji">💬</span>
+          <p class="activity-name">שיח עומק במעגל</p>
+        </div>
+        <div class="activity-card reveal reveal-d5">
+          <span class="activity-emoji">🌱</span>
+          <p class="activity-name">ליקוט מודרך</p>
+        </div>
+        <div class="activity-card reveal reveal-d6">
+          <span class="activity-emoji">🤲</span>
+          <p class="activity-name">עשייה בידיים</p>
+        </div>
       </div>
     </div>
     <p class="activities-note reveal">
@@ -937,7 +1016,9 @@
 
 <!-- ═══ QUOTE ═════════════════════════════════════════════ -->
 <section class="quote-section">
-  <div class="container">
+  <div style="display:grid; grid-template-columns: 1fr 1fr; min-height: 420px;">
+    <img src="Images/ליקוט%20-%20אופקית.png" alt="ליקוט בטבע" style="width:100%; height:100%; object-fit:cover; object-position: center; display:block; filter: brightness(0.55) sepia(0.3);">
+    <div class="container" style="display:flex; align-items:center; padding: 4rem 3rem;">
     <div class="quote-inner">
       <blockquote class="quote-text reveal">
         יש שלבים בחיים שבהם הדרך ברורה.<br>
@@ -948,6 +1029,7 @@
         <strong>כאן מתחיל המשעול השלישי.</strong>
       </blockquote>
       <p class="quote-attr reveal">— מתוך סיפור המותג, המשעול השלישי</p>
+    </div>
     </div>
   </div>
 </section>
@@ -963,13 +1045,16 @@
 <section class="method">
   <div class="container">
     <div class="method-inner">
-      <div class="method-badge reveal">
-        <div class="method-badge-title">אויקו-תרפיה</div>
-        <div class="method-badge-sub">Oiko-therapy</div>
-        <div class="method-badge-def">
-          מהמילה היוונית <em>Oikos</em> — בית במובנו הרחב.<br><br>
-          שיטה לבניית בית פנימי מחדש: רגשי, חברתי, קיומי —
-          ממנו ניתן לצאת בביטחון אל קשר, יוזמה ומשמעות מחודשת.
+      <div class="reveal" style="display: flex; flex-direction: column; gap: 2rem;">
+        <img src="Images/עקבות.png" alt="עקבות בשביל הטבע" style="width: 100%; border-radius: 16px; box-shadow: 0 12px 40px rgba(45,80,22,0.2); object-fit: cover;">
+        <div class="method-badge">
+          <div class="method-badge-title">אויקו-תרפיה</div>
+          <div class="method-badge-sub">Oiko-therapy</div>
+          <div class="method-badge-def">
+            מהמילה היוונית <em>Oikos</em> — בית במובנו הרחב.<br><br>
+            שיטה לבניית בית פנימי מחדש: רגשי, חברתי, קיומי —
+            ממנו ניתן לצאת בביטחון אל קשר, יוזמה ומשמעות מחודשת.
+          </div>
         </div>
       </div>
       <div class="reveal reveal-d2">
@@ -1003,10 +1088,10 @@
 </div>
 
 <!-- ═══ ABOUT ══════════════════════════════════════════════ -->
-<section class="about">
+<section class="about" id="about">
   <div class="container">
     <div class="about-inner reveal">
-      <div class="about-photo">🌲</div>
+      <img src="Images/Portrait.jpg" alt="עמית שורק" style="width: 280px; height: 280px; border-radius: 50%; object-fit: cover; object-position: center top; box-shadow: 0 12px 40px rgba(45,80,22,0.28); border: 5px solid var(--cream); flex-shrink: 0;">
       <div>
         <span class="section-label">המנחה</span>
         <h2 class="about-name">עמית שורק</h2>
@@ -1042,6 +1127,10 @@
 
 <!-- ═══ CONTACT ════════════════════════════════════════════ -->
 <section class="contact" id="contact">
+  <div style="position:relative; overflow:hidden; max-height:280px;">
+    <img src="Images/בישול%20-%20אופקית.png" alt="בישול משותף בטבע" style="width:100%; height:280px; object-fit:cover; object-position:center 60%; display:block; filter:brightness(0.35);">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 30%, var(--forest-dark) 100%);"></div>
+  </div>
   <div class="container">
     <div class="contact-inner">
       <div class="reveal">
@@ -1061,7 +1150,7 @@
         </a>
       </div>
       <p class="contact-details reveal reveal-d3">
-        מועצה אזורית זבולון&nbsp;·&nbsp;מפגשים שבועיים בטבע&nbsp;·&nbsp;שנתי · 10 חודשים
+        מפגשים שבועיים בטבע&nbsp;·&nbsp;שנתי · 10 חודשים
       </p>
     </div>
   </div>
@@ -1076,7 +1165,41 @@
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
+    updateBreadcrumb();
+    updateActiveLink();
   }, { passive: true });
+
+  // ── Breadcrumb
+  const bcCurrent = document.getElementById('bc-current');
+  const navSections = [
+    { id: 'hero',       label: '' },
+    { id: 'intro',      label: 'מה זה' },
+    { id: 'pillars',    label: 'יסודות' },
+    { id: 'activities', label: 'מה קורה' },
+    { id: 'about',      label: 'המנחה' },
+    { id: 'contact',    label: 'צור קשר' },
+  ];
+
+  function updateBreadcrumb() {
+    let current = navSections[0];
+    navSections.forEach(s => {
+      const el = document.getElementById(s.id);
+      if (el && window.scrollY >= el.offsetTop - 140) current = s;
+    });
+    bcCurrent.textContent = current.label;
+  }
+
+  function updateActiveLink() {
+    let current = '';
+    navSections.forEach(s => {
+      const el = document.getElementById(s.id);
+      if (el && window.scrollY >= el.offsetTop - 140) current = s.id;
+    });
+    document.querySelectorAll('.nav-link').forEach(a => {
+      const href = a.getAttribute('href').replace('#', '');
+      a.classList.toggle('active', href === current);
+    });
+  }
 
   // ── Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(a => {
